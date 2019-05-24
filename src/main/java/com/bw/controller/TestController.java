@@ -1,9 +1,13 @@
 package com.bw.controller;
 
+import com.bw.common.ApplicationContextHelper;
 import com.bw.common.JsonData;
+import com.bw.dao.SysAclModuleMapper;
 import com.bw.exception.PermissionException;
+import com.bw.model.SysAclModule;
 import com.bw.param.TestVo;
 import com.bw.util.BeanValidator;
+import com.bw.util.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Controller;
@@ -42,6 +46,9 @@ public class TestController {
     @ResponseBody
     public JsonData validate(TestVo vo){
         log.info("validate");
+        SysAclModuleMapper moduleMapper = ApplicationContextHelper.popBean(SysAclModuleMapper.class);
+        SysAclModule module = moduleMapper.selectByPrimaryKey(1);
+        log.info(JsonMapper.obj2String(module));
         BeanValidator.check(vo);
         return JsonData.success("test validate");
     }

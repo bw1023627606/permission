@@ -3,8 +3,10 @@ package com.bw.param;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 测试
@@ -15,10 +17,12 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class TestVo {
-    @NotBlank
-    private String msg;
+
     @NotNull
     private Integer id;
+    @NotBlank
+    private String msg;
 
+    private List<String> str;
 
 }

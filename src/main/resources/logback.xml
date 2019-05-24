@@ -1,38 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="permission" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<file>${catalina.home}/logs/permission.log</file>-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--<FileNamePattern>${catalina.home}/logs/permission.%d{yyyy-MM-dd}.log.gz</FileNamePattern>-->
+    <!--</rollingPolicy>-->
+    <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+    <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>-->
+    <!--</layout>-->
+    <!--</appender>-->
+    <!---->
+    <!--<logger name="xxx" level="INFO">-->
+    <!--<appender-ref ref="permission"/>-->
+    <!--</logger>-->
+
+    <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration scan="true" scanPeriod="60 seconds" debug="true">
-    <!-- 模块名称， 影响日志配置名，日志文件名 -->
+    &lt;!&ndash; 模块名称， 影响日志配置名，日志文件名 &ndash;&gt;
     <property name="appName" value="Permission"/>
     <property name="logMaxSize" valule="100MB"/>
-    <!--rootPath 日志路径，这里是相对路径，web项目eclipse下会输出到eclipse的安装目录下，如果部署到linux上的tomcat下，会输出到tomcat/bin目录 下 -->
+    &lt;!&ndash;rootPath 日志路径，这里是相对路径，web项目eclipse下会输出到eclipse的安装目录下，如果部署到linux上的tomcat下，会输出到tomcat/bin目录 下 &ndash;&gt;
     <property name="rootPath" value="/home/logs"/>
     <contextName>${appName}</contextName>
 
-    <!-- 控制台输出 -->
+    &lt;!&ndash; 控制台输出 &ndash;&gt;
     <appender name="STDOUT"
               class="ch.qos.logback.core.ConsoleAppender">
         <encoder
                 class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+            &lt;!&ndash;格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 &ndash;&gt;
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} -
                 %msg%n</pattern>
         </encoder>
     </appender>
-    <!-- 按照每天生成日志文件 -->
+    &lt;!&ndash; 按照每天生成日志文件 &ndash;&gt;
     <appender name="DEBUG"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 设置日志不超过${logMaxSize}时的保存路径，注意如果 是web项目会保存到Tomcat的bin目录 下 -->
+        &lt;!&ndash; 设置日志不超过${logMaxSize}时的保存路径，注意如果 是web项目会保存到Tomcat的bin目录 下 &ndash;&gt;
         <file>${rootPath}/${appName}/debug/${appName}-dlog.log</file>
-        <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。-->
+        &lt;!&ndash; 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。&ndash;&gt;
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${rootPath}/${appName}/debug/${appName}-dlog-%d{yyyy-MM-dd}-%d.log</fileNamePattern>
             <maxHistory>30</maxHistory>
-            <!-- 当天的日志大小 超过${logMaxSize}时,压缩日志并保存 -->
+            &lt;!&ndash; 当天的日志大小 超过${logMaxSize}时,压缩日志并保存 &ndash;&gt;
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
-        <!-- 日志输出的文件的格式  -->
+        &lt;!&ndash; 日志输出的文件的格式  &ndash;&gt;
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss}|%t|%p| %m |%logger:%L%n</pattern>
             <charset>UTF-8</charset>
@@ -87,12 +117,12 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
-    <!-- 为某个包下的所有类的指定Appender 这里也可以指定类名称例如：com.aa.bb.ClassName,下面还有另一种写法，就是涉及到name="关键包的日志输出级别" -->
-    <!--     <logger name="com.lin" additivity="false">   -->
-    <!--         <level value="debug" />   -->
-    <!--         <appender-ref ref="stdout" />   -->
-    <!--         <appender-ref ref="file" />   -->
-    <!--     </logger>   -->
+    &lt;!&ndash; 为某个包下的所有类的指定Appender 这里也可以指定类名称例如：com.aa.bb.ClassName,下面还有另一种写法，就是涉及到name="关键包的日志输出级别" &ndash;&gt;
+    &lt;!&ndash;     <logger name="com.lin" additivity="false">   &ndash;&gt;
+    &lt;!&ndash;         <level value="debug" />   &ndash;&gt;
+    &lt;!&ndash;         <appender-ref ref="stdout" />   &ndash;&gt;
+    &lt;!&ndash;         <appender-ref ref="file" />   &ndash;&gt;
+    &lt;!&ndash;     </logger>   &ndash;&gt;
     <logger name="jdbc" level="INFO"/>
     <logger name="org" level="INFO"/>
     <logger name="net" level="INFO"/>
@@ -100,13 +130,13 @@
     <logger name="java.sql" level="INFO"/>
     <logger name="javax" level="INFO"/>
 
-    <!--日志的输出级别由低到高（越来问题越严重）trace->debug->info->warn->error -->
-    <!-- root将级别为DEBUG及大于DEBUG的日志信息交给已经配置好的name='STDOUT'的appender处理，将信息打印到控制台-Console -->
+    &lt;!&ndash;日志的输出级别由低到高（越来问题越严重）trace->debug->info->warn->error &ndash;&gt;
+    &lt;!&ndash; root将级别为DEBUG及大于DEBUG的日志信息交给已经配置好的name='STDOUT'的appender处理，将信息打印到控制台-Console &ndash;&gt;
     <root level="DEBUG">
-        <!-- appender-ref标识这个appender将会添加到本应用的日志系统中 -->
+        &lt;!&ndash; appender-ref标识这个appender将会添加到本应用的日志系统中 &ndash;&gt;
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="INFO"/>
         <appender-ref ref="DEBUG"/>
         <appender-ref ref="ERROR"/>
     </root>
-</configuration>
+</configuration>-->
